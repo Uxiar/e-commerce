@@ -1,0 +1,149 @@
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+function Payment() {
+
+    let productData = JSON.parse(localStorage.getItem("productData")) || []
+    console.log("payment", productData);
+
+
+    if (!productData) {
+        return <p className="text-center text-xl">Loading...</p>;
+    }
+    return (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4 bg-gray-100 min-h-screen">
+            <div className="space-y-6">
+                <div className="bg-white p-4 shadow-md rounded-md">
+                    <p className="text-lg font-semibold mb-2">Contact Information</p>
+                    <div className="flex flex-col space-y-2">
+                        <label className="font-medium text-sm">Enter Email:</label>
+                        <input
+                            type="email"
+                            placeholder="Enter Email"
+                            className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
+                        />
+                    </div>
+                </div>
+
+                <div className="bg-white p-4 shadow-md rounded-md">
+                    <p className="text-lg font-semibold mb-2">Payment Details</p>
+                    <div className="flex flex-col space-y-2">
+                        <label className="font-medium text-sm">Card Number:</label>
+                        <input
+                            type="number"
+                            placeholder="Enter Card Number"
+                            className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
+                        />
+                    </div>
+                    <div className="flex space-x-2 mt-3">
+                        <div className="flex flex-col w-1/2">
+                            <label className="font-medium text-sm">Expiry Date (MM/YY)</label>
+                            <input
+                                type="text"
+                                placeholder="MM/YY"
+                                className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
+                            />
+                        </div>
+                        <div className="flex flex-col w-1/2">
+                            <label className="font-medium text-sm">CVC</label>
+                            <input
+                                type="number"
+                                placeholder="CVC"
+                                className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-white p-4 shadow-md rounded-md">
+                    <p className="text-lg font-semibold mb-2">Shipping Address</p>
+                    <div className="space-y-2">
+                        <div>
+                            <label className="font-medium text-sm">Address</label>
+                            <input
+                                type="text"
+                                placeholder="Enter Address"
+                                className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
+                            />
+                        </div>
+                        <div className="flex space-x-2">
+                            <div className="flex flex-col w-1/3">
+                                <label className="font-medium text-sm">City</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter City"
+                                    className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
+                                />
+                            </div>
+                            <div className="flex flex-col w-1/3">
+                                <label className="font-medium text-sm">State/Province</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter State/Province"
+                                    className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
+                                />
+                            </div>
+                            <div className="flex flex-col w-1/3">
+                                <label className="font-medium text-sm">Postal Code</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter Postal Code"
+                                    className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-white p-4 shadow-md rounded-md">
+                    <p className="text-lg font-semibold mb-2">Billing Information</p>
+                    <div className="flex items-center space-x-2">
+                        <input
+                            type="checkbox"
+                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                        />
+                        <p className="font-medium text-sm">Same as shipping information</p>
+                    </div>
+                </div>
+
+                <div className="text-center">
+                    <button className="w-full py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-md hover:bg-indigo-700 transition duration-300 text-sm">
+                        Pay Now
+                    </button>
+                </div>
+            </div>
+
+            <div className="bg-indigo-600 text-neutral-50 p-4 shadow-md rounded-md">
+                <div className="space-y-2">
+                    {productData.map((item,index) => (
+                        <div key={index} className='flex flex-row justify-between items-center border-b'>
+                            <img src={item.thumbnail} className='h-28' />
+                            <h1 className='mb-3 font-bold'>{item.title}</h1>
+                            <p className='text-xl font-medium mb-3'>${item.price}</p>
+                        </div>
+                    ))
+                    }
+                    <div className="flex justify-between">
+                        <p className="text-base font-semibold">Subtotal</p>
+                        <p className="text-base">$00</p>
+                    </div>
+                    <div className="flex justify-between">
+                        <p className="text-base font-semibold">Shipping</p>
+                        <p className="text-base">$5.00</p>
+                    </div>
+                    <div className="flex justify-between border-b mb-4">
+                        <p className="text-base font-semibold">Taxes</p>
+                        <p className="text-base">$3.00</p>
+
+                    </div>
+                    <div className="flex justify-between">
+                        <p className="text-base font-semibold">Total</p>
+                        <p className="text-base">$0.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default Payment;
