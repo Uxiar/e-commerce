@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import ContentWrapper from './ContentWrapper';
 import Navbar from './Navbar';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ShoppingCart = () => {
+    const navigate = useNavigate();
     const [Data, setData] = useState(JSON.parse(localStorage.getItem("productData")) || []);
 
 
@@ -11,10 +12,21 @@ const ShoppingCart = () => {
         let UpadateData = [...Data]
         UpadateData.splice(index, 1)
         setData(UpadateData)
-        localStorage.setItem("productData",JSON.stringify(UpadateData))
+        localStorage.setItem("productData", JSON.stringify(UpadateData))
     }
 
-    
+    const shippingCost = Data.length * 5; 
+    const taxCost  = Data.length * 3;
+    const subtotal = Data.reduce((acc, product) => acc + product.price, 0);
+    let updateSubtotal =  subtotal.toFixed(2);
+
+    const total = (shippingCost + taxCost + parseFloat(updateSubtotal)).toFixed(2);
+
+    let checkoutHandler = () => {
+        navigate("/payment")
+    }
+
+
     if (!Data.length) {
         return <p className="text-center text-xl font-semibold">Your cart is empty</p>;
     }
@@ -69,27 +81,27 @@ const ShoppingCart = () => {
 
                         <div className='flex justify-between mb-4'>
                             <p className='text-gray-600'>Subtotal</p>
-                            <p className='text-gray-800'>$00</p>
+                            <p className='text-gray-800'>${updateSubtotal}</p>
                         </div>
 
                         <div className='flex justify-between mb-4'>
                             <p className='text-gray-600'>Shipping Estimate</p>
-                            <p className='text-gray-800'>$5.00</p>
+                            <p className='text-gray-800'>${shippingCost}</p>
                         </div>
 
                         <div className='flex justify-between mb-4'>
                             <p className='text-gray-600'>Tax Estimate</p>
-                            <p className='text-gray-800'>$3.00</p>
+                            <p className='text-gray-800'>${taxCost}</p>
                         </div>
 
                         <div className='flex justify-between mt-4 pt-4 border-t-2'>
                             <p className='font-semibold text-lg'>Order Total</p>
-                            <p className='font-semibold text-lg'>$00</p>
+                            <p className='font-semibold text-lg'>${total}</p>
                         </div>
 
-                        <Link to={"/Payment"}  className='bg-violet-700 text-white text-lg py-3 px-6 rounded-md w-full mt-6 transition-transform transform hover:scale-105'>
+                        <button onClick={checkoutHandler} className='bg-violet-700 text-white text-lg py-3 px-6 rounded-md w-full mt-6 transition-transform transform hover:scale-105'>
                             Proceed to Checkout
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </div>

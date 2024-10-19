@@ -10,10 +10,11 @@ import Bestsellers from './BestSellers'
 const Home = () => {
   return (
     <div className='overflow-x-hidden text-neutral-900 antialiased selection:bg-cyan-300 selection:text-cyan-900'>  
-    <ContentWrapper>
+   
      <Navbar/>
+     
       <Hero/>
-   </ContentWrapper>
+   
     <Offer/>
     < Display/>
     < Bestsellers/>

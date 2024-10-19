@@ -4,16 +4,18 @@ import ContentWrapper from './ContentWrapper';
 import Navbar from './Navbar';
 
 
+
 function bestsellersDisplay() {
-    const { category } = useParams();
+    const { id } = useParams();
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
         fetch(`https://dummyjson.com/products/${id}`)
             .then(res => res.json())
             .then(data => setProducts(data.products));
-    }, []);
+    }, [id]);
 
+   
     return (
         <>
             <ContentWrapper>

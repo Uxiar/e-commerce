@@ -6,18 +6,25 @@ function Payment() {
     let productData = JSON.parse(localStorage.getItem("productData")) || []
     console.log("payment", productData);
 
+    let subtotal = productData.reduce((acc, product) => acc + product.price, 0)
+    let updateSubtotal = subtotal.toFixed(2)
 
-    if (!productData) {
-        return <p className="text-center text-xl">Loading...</p>;
-    }
+    let ShippingCost = productData.length * 5
+    let taxCost = productData.length * 3
+
+    let total = (ShippingCost + taxCost + parseFloat(updateSubtotal)).toFixed(2)
+
+
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4 bg-gray-100 min-h-screen">
-            <div className="space-y-6">
+            <form className="space-y-6">
                 <div className="bg-white p-4 shadow-md rounded-md">
                     <p className="text-lg font-semibold mb-2">Contact Information</p>
                     <div className="flex flex-col space-y-2">
                         <label className="font-medium text-sm">Enter Email:</label>
                         <input
+                        required
                             type="email"
                             placeholder="Enter Email"
                             className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
@@ -30,6 +37,7 @@ function Payment() {
                     <div className="flex flex-col space-y-2">
                         <label className="font-medium text-sm">Card Number:</label>
                         <input
+                        required
                             type="number"
                             placeholder="Enter Card Number"
                             className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
@@ -39,7 +47,8 @@ function Payment() {
                         <div className="flex flex-col w-1/2">
                             <label className="font-medium text-sm">Expiry Date (MM/YY)</label>
                             <input
-                                type="text"
+                            required
+                                type="number"
                                 placeholder="MM/YY"
                                 className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
                             />
@@ -47,6 +56,7 @@ function Payment() {
                         <div className="flex flex-col w-1/2">
                             <label className="font-medium text-sm">CVC</label>
                             <input
+                            required
                                 type="number"
                                 placeholder="CVC"
                                 className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
@@ -61,6 +71,7 @@ function Payment() {
                         <div>
                             <label className="font-medium text-sm">Address</label>
                             <input
+                            required
                                 type="text"
                                 placeholder="Enter Address"
                                 className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
@@ -70,6 +81,7 @@ function Payment() {
                             <div className="flex flex-col w-1/3">
                                 <label className="font-medium text-sm">City</label>
                                 <input
+                                required
                                     type="text"
                                     placeholder="Enter City"
                                     className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
@@ -78,6 +90,7 @@ function Payment() {
                             <div className="flex flex-col w-1/3">
                                 <label className="font-medium text-sm">State/Province</label>
                                 <input
+                                required
                                     type="text"
                                     placeholder="Enter State/Province"
                                     className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
@@ -86,6 +99,7 @@ function Payment() {
                             <div className="flex flex-col w-1/3">
                                 <label className="font-medium text-sm">Postal Code</label>
                                 <input
+                                required
                                     type="text"
                                     placeholder="Enter Postal Code"
                                     className="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 text-sm"
@@ -99,6 +113,7 @@ function Payment() {
                     <p className="text-lg font-semibold mb-2">Billing Information</p>
                     <div className="flex items-center space-x-2">
                         <input
+                        required
                             type="checkbox"
                             className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                         />
@@ -111,11 +126,11 @@ function Payment() {
                         Pay Now
                     </button>
                 </div>
-            </div>
+            </form>
 
             <div className="bg-indigo-600 text-neutral-50 p-4 shadow-md rounded-md">
                 <div className="space-y-2">
-                    {productData.map((item,index) => (
+                    {productData.map((item, index) => (
                         <div key={index} className='flex flex-row justify-between items-center border-b'>
                             <img src={item.thumbnail} className='h-28' />
                             <h1 className='mb-3 font-bold'>{item.title}</h1>
@@ -125,20 +140,20 @@ function Payment() {
                     }
                     <div className="flex justify-between">
                         <p className="text-base font-semibold">Subtotal</p>
-                        <p className="text-base">$00</p>
+                        <p className="text-base">${updateSubtotal}</p>
                     </div>
                     <div className="flex justify-between">
                         <p className="text-base font-semibold">Shipping</p>
-                        <p className="text-base">$5.00</p>
+                        <p className="text-base">${ShippingCost}</p>
                     </div>
                     <div className="flex justify-between border-b mb-4">
                         <p className="text-base font-semibold">Taxes</p>
-                        <p className="text-base">$3.00</p>
+                        <p className="text-base">${taxCost}</p>
 
                     </div>
                     <div className="flex justify-between">
                         <p className="text-base font-semibold">Total</p>
-                        <p className="text-base">$0.00</p>
+                        <p className="text-base">${total}</p>
                     </div>
                 </div>
             </div>

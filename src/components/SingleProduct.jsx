@@ -4,6 +4,9 @@ import img from "../assets/review.jpg";
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import ContentWrapper from './ContentWrapper';
 import Navbar from './Navbar';
+import { motion } from "framer-motion";
+import loading from "../assets/logo (2).png";
+
 
 function SingleProduct() {
     const [data, setData] = useState(null);
@@ -19,7 +22,7 @@ function SingleProduct() {
         setProductData(updatedProductData);
         localStorage.setItem('productData', JSON.stringify(updatedProductData));
         console.log("Updated Product Data: ", updatedProductData);
-        navigate("/payment")
+        navigate("/ShoppingCart")
     };
 
     useEffect(() => {
@@ -29,7 +32,22 @@ function SingleProduct() {
     }, [id]);
 
     if (!data) {
-        return <p className="text-center text-xl">Loading...</p>;
+        return <div className="flex items-center justify-center min-h-screen">
+            <motion.img
+                src={loading}
+                alt="loading"
+                width="200"
+                animate={{
+                    y: [0, -20, 0],
+                }}
+                transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                }}
+            />
+        </div>
+
     }
 
     return (
@@ -61,8 +79,7 @@ function SingleProduct() {
                     </div>
 
                     <div className='flex flex-row gap-4 mt-4'>
-                        <button onClick={() => payment(data)} className='bg-violet-700 text-lg text-white py-2 px-6 rounded-md transition-transform transform hover:scale-105 shadow'>
-                            Pay ${data.price}
+                        <button onClick={() => payment(data)} className='bg-violet-700 text-lg text-white py-2 px-6 rounded-md transition-transform transform hover:scale-105 shadow'>Add To Cart
                         </button>
                         <Link to={"/Preview"} className='bg-neutral-400 text-lg text-white py-2 px-6 rounded-md transition-transform transform hover:scale-105 shadow'>
                             Preview

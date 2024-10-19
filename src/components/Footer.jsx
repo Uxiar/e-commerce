@@ -45,9 +45,9 @@ const Footer = () => {
 
             </div>
             <div className='bg-neutral-100 flex justify-between py-14 px-20'>
-                <p>Copyright © 2024 Custom Printing Pro </p>
+                <p>Copyright © 2024 Next. Buy </p>
 
-                <p>Powered by Custom Printing Pro</p>
+                <p>Powered by Next. Buy</p>
 
             </div>
         </div>

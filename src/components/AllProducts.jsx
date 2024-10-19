@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import ContentWrapper from './ContentWrapper';
 import Navbar from './Navbar';
+import { motion } from "framer-motion";
+import loading from "../assets/logo (2).png";
 
 function AllProducts() {
   const [products, setProducts] = useState([]);
@@ -14,8 +16,22 @@ function AllProducts() {
   }, []);
 
 
-  if (!products) {
-    return <p className="text-center text-2xl">Loading...</p>;
+  if (products.length === 0) {
+    return  <div className="flex items-center justify-center min-h-screen">
+    <motion.img
+        src={loading}
+        alt="loading"
+        width="200"
+        animate={{
+            y: [0, -20, 0],  
+        }}
+        transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+        }}
+    />
+</div>
   }
 
   return (

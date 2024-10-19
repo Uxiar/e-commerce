@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ContentWrapper from './ContentWrapper';
 import Navbar from './Navbar';
+import { motion } from "framer-motion";
+import loading from "../assets/logo (2).png";
 
 function CategoriesLists() {
     const [data, setData] = useState();
@@ -13,10 +15,24 @@ function CategoriesLists() {
             .then(data => setData(data));
     }, []);
 
+   
     if (!data) {
-        return <p className="text-center text-2xl">Loading...</p>;
+        return  <div className="flex items-center justify-center min-h-screen">
+        <motion.img
+            src={loading}
+            alt="loading"
+            width="200"
+            animate={{
+                y: [0, -20, 0],  
+            }}
+            transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+            }}
+        />
+    </div>
     }
-
     return (
         <>
             <ContentWrapper>
@@ -24,10 +40,10 @@ function CategoriesLists() {
             </ContentWrapper>
             <div className='px-20 mb-10'>
                 <h1 className='text-2xl mb-6'>Shop by All Categories</h1>
-                <div className='grid grid-cols-4 gap-6'>
+                <div className='grid grid-cols-4 gap-5'>
                     {data?.map((products, index) => (
                         <Link to={`/category/${products}`}
-                            className='border rounded-lg bg-red-600 text-neutral-100 text-xl text-center py-4 px-6 hover:bg-black shadow-lg transition duration-300'
+                            className='border rounded-lg bg-red-600 text-neutral-100 text-xl text-center py-4 px-3 hover:bg-black shadow-lg transition duration-300transform hover:scale-105'
                             key={index}
                         >
                             {products}
